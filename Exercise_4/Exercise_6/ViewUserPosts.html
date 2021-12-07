@@ -1,0 +1,44 @@
+<html>
+<head>
+  <title>View User Posts</title>
+  <style>
+    h1 {
+      text-align: center;
+      color: red;
+      background-color: black;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>View User Posts</h1>
+
+<p>Use the select element to choose a current user</p>
+<form action="ViewUserPosts.php" method="post">
+  <label for="users">Choose a Current User:</label>
+  <?php
+  $mysqli = new mysqli("mysql.eecs.ku.edu", "h211w862", "iquu4ohJ", "h211w862");
+  $sql = "SELECT user_id FROM Users";
+  $result = mysqli_query($mysqli, $sql);
+
+
+  if (mysqli_num_rows($result) > 0) {
+      // output data of each row
+      echo "<select name='users' id='u_ids'>";
+      while($row = $result->fetch_assoc()) {
+      echo "<option value='" . $row["user_id"] . "'>" . $row["user_id"] . "</option>";
+      }
+      echo "</select>";
+  } else {
+      echo "There are currently no users.<br>";
+  }
+
+  $mysqli->close();
+  ?>
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
